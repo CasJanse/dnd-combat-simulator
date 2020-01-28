@@ -7,6 +7,7 @@ public class TestingGrid : MonoBehaviour
 
     private void Start()
     {
-        Grid grid = new Grid(20, 10);
+        Grid grid = new Grid(10, 5, 10f);
+        grid.SetValue(1, 2, 56);
     }
 }
