@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DND.Utils;
 
-public class Grid
+public class Grid<TGridObject>
 {
     private int width;
     private int height;
     private float cellSize;
     private Vector3 originPosition;
-    private int [,] gridArray;
+    private TGridObject[,] gridArray;
     private TextMesh[,] debugTextArray;
 
     public Grid(int width, int height, float cellSize, Vector3 originPosition)
@@ -19,7 +19,7 @@ public class Grid
         this.cellSize = cellSize;
         this.originPosition = originPosition;
 
-        gridArray = new int[width, height];
+        gridArray = new TGridObject[width, height];
         debugTextArray = new TextMesh[width, height];
 
         for (int x = 0; x < gridArray.GetLength(0); x++)
@@ -47,7 +47,7 @@ public class Grid
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
     }
 
-    public void SetValue(int x, int y, int value)
+    public void SetValue(int x, int y, TGridObject value)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
@@ -60,14 +60,14 @@ public class Grid
         }
     }
 
-    public void SetValue(Vector3 worldPosition, int value)
+    public void SetValue(Vector3 worldPosition, TGridObject value)
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
         SetValue(x, y, value);
     }
 
-    public int GetValue(int x, int y)
+    public TGridObject GetValue(int x, int y)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
@@ -76,18 +76,18 @@ public class Grid
         else
         {
             Debug.LogWarning("Could not retrieve value at: [" + x + ", " + y + "]. Index does not exist in grid.");
-            return -1;
+            return default(TGridObject);
         }
     }
 
-    public int GetValue(Vector3 worldPosition)
+    public TGridObject GetValue(Vector3 worldPosition)
     {
         int x, y;
         GetXY(worldPosition, out x, out y);
         return GetValue(x, y);
     }
 
-    public void SetAllValues(int value)
+    public void SetAllValues(TGridObject value)
     {
         for (int x = 0; x < width; x++)
         {
