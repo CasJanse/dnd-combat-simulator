@@ -1,13 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DND.Utils;
 
 public class TestingGrid : MonoBehaviour
 {
 
+    private Grid grid;
+
     private void Start()
     {
-        Grid grid = new Grid(10, 5, 10f);
-        grid.SetValue(1, 2, 56);
+        grid = new Grid(20, 20, 5f, new Vector3(-50, -50));
+        //grid.SetValue(new Vector3(21, 14), 56);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log(grid.GetValue(Utils.GetMouseWorldPosition()));
+        }
     }
 }
